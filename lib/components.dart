@@ -6,6 +6,7 @@ class ContainerZ extends StatelessWidget {
   final double width;
   @override
   Widget build(BuildContext context) {
+    //  log(width.toString());
     final size = MediaQuery.of(context).size;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),

@@ -6,7 +6,36 @@ part of 'window.p.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tabSizeHash() => r'cbec1692880b47ce654d00d649d5eff25294e7ac';
+String _$totalTabsHash() => r'658d865bfe10b7a2b25c712ba95e0842e74f54ac';
+
+/// See also [TotalTabs].
+@ProviderFor(TotalTabs)
+final totalTabsProvider = AutoDisposeNotifierProvider<TotalTabs, int>.internal(
+  TotalTabs.new,
+  name: r'totalTabsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$totalTabsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TotalTabs = AutoDisposeNotifier<int>;
+String _$winSizeHash() => r'adf415af3cc3a8eeae2a7f4fc7a19ed532207351';
+
+/// See also [WinSize].
+@ProviderFor(WinSize)
+final winSizeProvider =
+    AutoDisposeAsyncNotifierProvider<WinSize, Size>.internal(
+  WinSize.new,
+  name: r'winSizeProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$winSizeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$WinSize = AutoDisposeAsyncNotifier<Size>;
+String _$tabSizeHash() => r'52f8103d479b4c662c8e527f25e1c4675aa7962a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,10 +58,10 @@ class _SystemHash {
   }
 }
 
-abstract class _$TabSize extends BuildlessAutoDisposeNotifier<Size> {
+abstract class _$TabSize extends BuildlessAutoDisposeAsyncNotifier<Size> {
   late final int i;
 
-  Size build(
+  FutureOr<Size> build(
     int i,
   );
 }
@@ -42,7 +71,7 @@ abstract class _$TabSize extends BuildlessAutoDisposeNotifier<Size> {
 const tabSizeProvider = TabSizeFamily();
 
 /// See also [TabSize].
-class TabSizeFamily extends Family<Size> {
+class TabSizeFamily extends Family<AsyncValue<Size>> {
   /// See also [TabSize].
   const TabSizeFamily();
 
@@ -80,7 +109,8 @@ class TabSizeFamily extends Family<Size> {
 }
 
 /// See also [TabSize].
-class TabSizeProvider extends AutoDisposeNotifierProviderImpl<TabSize, Size> {
+class TabSizeProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<TabSize, Size> {
   /// See also [TabSize].
   TabSizeProvider(
     int i,
@@ -110,7 +140,7 @@ class TabSizeProvider extends AutoDisposeNotifierProviderImpl<TabSize, Size> {
   final int i;
 
   @override
-  Size runNotifierBuild(
+  FutureOr<Size> runNotifierBuild(
     covariant TabSize notifier,
   ) {
     return notifier.build(
@@ -135,7 +165,7 @@ class TabSizeProvider extends AutoDisposeNotifierProviderImpl<TabSize, Size> {
   }
 
   @override
-  AutoDisposeNotifierProviderElement<TabSize, Size> createElement() {
+  AutoDisposeAsyncNotifierProviderElement<TabSize, Size> createElement() {
     return _TabSizeProviderElement(this);
   }
 
@@ -153,20 +183,21 @@ class TabSizeProvider extends AutoDisposeNotifierProviderImpl<TabSize, Size> {
   }
 }
 
-mixin TabSizeRef on AutoDisposeNotifierProviderRef<Size> {
+mixin TabSizeRef on AutoDisposeAsyncNotifierProviderRef<Size> {
   /// The parameter `i` of this provider.
   int get i;
 }
 
 class _TabSizeProviderElement
-    extends AutoDisposeNotifierProviderElement<TabSize, Size> with TabSizeRef {
+    extends AutoDisposeAsyncNotifierProviderElement<TabSize, Size>
+    with TabSizeRef {
   _TabSizeProviderElement(super.provider);
 
   @override
   int get i => (origin as TabSizeProvider).i;
 }
 
-String _$separatorPositionHash() => r'2f83af9a2df7f49926c6a6bcf43b2ab596c6f800';
+String _$separatorPositionHash() => r'ffd9d7a9bd256a471fb38abf26d4d3ae48be2b09';
 
 abstract class _$SeparatorPosition
     extends BuildlessAutoDisposeNotifier<double?> {

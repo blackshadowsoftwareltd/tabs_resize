@@ -1,25 +1,24 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'providers/window.p.dart';
 
 class Separator extends ConsumerWidget {
-  const Separator({super.key});
-
+  const Separator({super.key, required this.i});
+  final int i;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final separatorFirst = ref.read(separatorPositionProvider(0).notifier);
+    ref.watch(separatorPositionProvider(i));
+    final separatorFirst = ref.read(separatorPositionProvider(i).notifier);
 
     return MouseRegion(
       cursor: SystemMouseCursors.resizeLeftRight,
-      onEnter: (_) => print('onEnter'),
-      onExit: (_) => print('onExit'),
+      // onEnter: (_) => print('onEnter'),
+      // onExit: (_) => print('onExit'),
       // onHover: (_) => print('onHover'),
       child: GestureDetector(
         onHorizontalDragStart: (v) => separatorFirst.startEnd(v.globalPosition.dx),
-        onHorizontalDragUpdate: (v) => separatorFirst.update(v.globalPosition.dx),
+        onHorizontalDragUpdate: (v) async => await separatorFirst.update(v.globalPosition.dx),
         onHorizontalDragEnd: (v) => separatorFirst.startEnd(null),
         child: const SeparatorX(),
       ),
