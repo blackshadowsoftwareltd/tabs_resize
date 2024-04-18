@@ -77,7 +77,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
                       );
                     },
                   );
-                })
+                }),
+                const Separator(i: 1),
+                Consumer(builder: (context, state, __) {
+                  final third = ref.watch(tabSizeProvider(2));
+                  return third.when(
+                    error: (e, _) => Center(
+                      child: Text(e.toString()),
+                    ),
+                    loading: () => const Center(child: CircularProgressIndicator()),
+                    data: (size) {
+                      return ContainerZ(
+                        width: size.width,
+                        color: Colors.lightGreen,
+                      );
+                    },
+                  );
+                }),
               ],
             ),
           ),

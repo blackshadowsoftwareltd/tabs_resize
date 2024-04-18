@@ -12,7 +12,7 @@ part 'window.p.g.dart';
 @riverpod
 class TotalTabs extends _$TotalTabs {
   @override
-  int build() => 2;
+  int build() => 3;
 }
 
 @riverpod
@@ -29,19 +29,16 @@ class TabSize extends _$TabSize {
     final sw = s?.width ?? 0.0;
     final t = ref.watch(totalTabsProvider);
     final tw = t - 1;
-    //final size = Size(((s?.width ?? 0 - ((t - 1) * separatorWidth)) / t).abs(), s?.height ?? 0);
-    final size = Size(((sw - (tw * separatorWidth)) / t).abs(), 0);
+     final size = Size(((sw - (tw * separatorWidth)) / t).abs(), 0);
     log('${(sw - (tw * separatorWidth)) / t} init - ${size.toString()}');
     return size;
   }
 
   void reSize(Size s) {
-    ref.invalidateSelf();
-    // state = AsyncValue.data(s);
+    ref.invalidateSelf(); 
   }
 
-  void current(double v) {
-    // if (state.value!.width < v|| ) return;
+  void current(double v) { 
     state = AsyncValue.data(Size(v, state.value!.height));
   }
 
@@ -62,23 +59,15 @@ class SeparatorPosition extends _$SeparatorPosition {
   double? build(int i) => null;
 
   Future<void> startEnd(double? v) async {
-    //log(v.toString());
     if (v == null) {
-      //  ref.read(tabSizeProvider(i).notifier).forwordUpdate(state!);
-      //  ref.read(tabSizeProvider(i + 1).notifier).update(state! * -1);
       await Future.delayed(const Duration(milliseconds: 100));
       final totalTabs = ref.read(totalTabsProvider);
       final winSize = ref.read(winSizeProvider);
       for (int x = 0; x < totalTabs; x++) {
         if (x == i) {
           ref.read(tabSizeProvider(i).notifier).current(state!);
-          // } else {
-          // ref.read(tabSizeProvider(x).notifier).forwordUpdate(v);
-          //  ref.read(tabSizeProvider(i).notifier).forwordUpdate(windowOptions.size!.width - v);
-          //} else {
           final separat = (totalTabs - 1) * separatorWidth;
           final ws = winSize.value?.width ?? 0.0;
-          // final cs = currentSize.value!.width;
           final others = ws - state! - separat;
           log('$v others $separat - $ws - $state ($others) : ${(others / (totalTabs - 1))}');
           ref.read(tabSizeProvider(1).notifier).others((others / (totalTabs - 1)));
@@ -93,31 +82,5 @@ class SeparatorPosition extends _$SeparatorPosition {
   Future<void> update(double? v) async {
     if (v! < minimumTabWidth || windowOptions.size!.width - v < minimumTabWidth) return;
     state = v;
-    /*
-    await Future.delayed(Duration.zero);
-    final totalTabs = ref.read(totalTabsProvider);
-    final winSize = ref.read(winSizeProvider);
-    final currentSize = ref.read(tabSizeProvider(i));
-    for (int x = 0; x < totalTabs; x++) {
-      if (x == i) {
-        ref.read(tabSizeProvider(i).notifier).current((state! - v) + state!);
-
-        // ref.read(tabSizeProvider(x).notifier).forwordUpdate(v);
-        //  ref.read(tabSizeProvider(i).notifier).forwordUpdate(windowOptions.size!.width - v);
-        //} else {
-        final separat = (totalTabs - 1) * separatorWidth;
-        final ws = winSize.value?.width ?? 0.0;
-        final cs = currentSize.value!.width;
-        final others = ws - cs - separat;
-        log('$v others $separat - $ws - $cs ($others) : ${(others / (totalTabs - 1))}');
-        ref.read(tabSizeProvider(1).notifier).others((others / (totalTabs - 1)));
-      }
-    }
-    */
-    // final second = ref.read(tabSizeProvider(i + 1));
-    // log((-v + windowOptions.size!.width).toString());
-    // log((windowOptions.size!.width - v < minimumTabWidth).toString());
-    //  if (windowOptions.size!.width - v < minimumTabWidth) return;
-    // ref.read(tabSizeProvider(i).notifier).reversUpdate(v);
   }
 }
