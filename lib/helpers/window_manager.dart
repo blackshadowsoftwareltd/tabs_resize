@@ -6,12 +6,16 @@ import 'constants.dart';
 late WindowOptions windowOptions;
 
 Future<void> windowManagerInit() async {
+  const totalWindow = 3;
+  const size = Size((defaultTabWidth * totalWindow) + (6 * totalWindow), defaultTabHeight);
   windowOptions = const WindowOptions(
-    size: Size((defaultTabWidth * 2) + 6, 600),
+    size: size,
+    minimumSize: size, maximumSize: size,
     // center: true,
     backgroundColor: Colors.transparent,
     skipTaskbar: false,
     titleBarStyle: TitleBarStyle.normal,
+    fullScreen: false,
   );
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
@@ -19,4 +23,3 @@ Future<void> windowManagerInit() async {
     await windowManager.focus();
   });
 }
-

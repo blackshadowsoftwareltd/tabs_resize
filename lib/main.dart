@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:window/window_manager.dart';
+import 'package:window/helpers/window_manager.dart';
 
 import 'home.dart';
 

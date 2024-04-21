@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window/providers/window.p.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'components.dart';
+import 'components/components.dart';
 import 'providers/listener.p.dart';
-import 'separator.dart';
+import 'components/separator.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'providers/window.p.dart';
+import '../providers/window.p.dart';
 
 class Separator extends ConsumerWidget {
   const Separator({super.key, required this.i});

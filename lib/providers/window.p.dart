@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:window/window_manager.dart';
+import 'package:window/helpers/window_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
-import '../constants.dart';
+import '../helpers/constants.dart';
 
 part 'window.p.g.dart';
 
