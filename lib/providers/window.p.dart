@@ -77,24 +77,18 @@ class SeparatorPosition extends _$SeparatorPosition {
   }
 
   Future<void> update(double? vz) async {
-    final totalTabs = ref.read(totalTabsProvider);
-    final winSize = ref.read(winSizeProvider).value?.width ?? 0.0;
-    final currentPosition = ref.read(tabSizeProvider(i).notifier).position!;
-    // log("$i $totalTabs ${i == (totalTabs - 2)}");
+    final nextSize = ref.read(tabSizeProvider(i + 1)).value?.width ?? 0;
+    final nextPosition = ref.read(tabSizeProvider(i + 1).notifier).position!;
+
     final v = vz ?? 0;
-    if (i == 0) {
-      if (v < minimumTabWidth) return; // if left is small
-      if (i + 1 == totalTabs - 1 && v > winSize - minimumTabWidth) return; // if right is small
-      final nextSize = ref.read(tabSizeProvider(i + 1)).value?.width ?? 0;
-      final nextPosition = ref.read(tabSizeProvider(i + 1).notifier).position!;
-      if (v > nextSize + nextPosition - minimumTabWidth) return; // if right is small
-      state = v - 3;
-    } else if (i == totalTabs - 2) {
-      if (v < currentPosition + minimumTabWidth) return;
-      if (v > winSize - minimumTabWidth) return;
-      log('c p $currentPosition $v t ${currentPosition + minimumTabWidth} ${v < currentPosition + minimumTabWidth}');
-      state = v - 3;
+
+    double minP = separatorWidth * i;
+    for (int l = 0; l < i; l++) {
+      minP += ref.read(tabSizeProvider(l)).value?.width ?? 0.0;
     }
+    if (v < minP + minimumTabWidth) return;
+    if (v > nextPosition + nextSize - minimumTabWidth) return;
+    state = v - 3;
   }
 
   Future<void> end() async {
