@@ -2,10 +2,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:window_manager/window_manager.dart';
-
 import '../helpers/constants.dart';
 import '../helpers/shared_pref.dart';
-
 part 'window.p.g.dart';
 
 @riverpod
@@ -20,12 +18,6 @@ class WinSize extends _$WinSize {
   Future<Size> build() async {
     return await windowManager.getSize();
   }
-
-  // double exceptSeparator(int totalTabs) {
-  //   final t = ref.read(totalTabsProvider);
-  //   final s = state.value?.width ?? 0.0;
-  //   return s - (t * separatorWidth);
-  // }
 }
 
 @riverpod
@@ -36,14 +28,9 @@ class TabSize extends _$TabSize {
     final s = ref.watch(winSizeProvider).value ?? const Size(0, 0);
     final t = ref.watch(totalTabsProvider);
 
-    // final old = await getTabWidth(i.toString());
-    // if (old != null) {
-    //   return Size(old, s?.height ?? 0.0);
-    // }
     final exceptSep = s.width - (separatorWidth * (t - 1));
 
-    final size = Size(exceptSep / t, s.height);
-    print('Tabs Ref Initialized $i : $size');
+    final size = Size((exceptSep / t).abs(), s.height);
 
     position = (size.width * i) + (separatorWidth * i);
     return size;
@@ -56,12 +43,6 @@ class TabSize extends _$TabSize {
   void current(double v) {
     state = AsyncValue.data(Size(v, state.value!.height));
   }
-
-  // void forwordUpdate(double v) {
-  //   if (v < minimumTabWidth || v - windowOptions.size!.width < minimumTabWidth) return;
-  //   log(v.toString());
-  //   state = AsyncValue.data(Size(v, state.value!.height));
-  // }
 
   void next(double v) {
     final p = (state.value?.width ?? 0) - v;

@@ -60,7 +60,7 @@ class SeparatorIcon extends StatelessWidget {
     return const ColoredBox(
       color: Colors.black,
       child: SizedBox(
-        width: 1,
+        width: .6,
         height: 30,
       ),
     );
