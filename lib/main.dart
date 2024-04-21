@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window/helpers/window_manager.dart';
 
+import 'helpers/shared_pref.dart';
 import 'home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initSharedPref();
   await windowManagerInit();
 
   runApp(const App());

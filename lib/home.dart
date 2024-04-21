@@ -35,6 +35,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
   }
 
   @override
+  void onWindowMove() {
+    ref.read(wMListenerProvider.notifier).windowMoveEvents();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ref.watch(winSizeProvider);
 
