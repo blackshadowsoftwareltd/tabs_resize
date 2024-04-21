@@ -93,35 +93,17 @@ class SeparatorPosition extends _$SeparatorPosition {
 
   Future<void> end() async {
     await Future.delayed(const Duration(milliseconds: 100));
-    final winSize = ref.read(winSizeProvider).value?.width ?? 0.0;
-    final totalTabs = ref.read(totalTabsProvider);
-
-    final c = ref.read(tabSizeProvider(i)).value?.width ?? 0.0;
+    final nextSize = ref.read(tabSizeProvider(i + 1)).value?.width ?? 0;
+    final nextPosition = ref.read(tabSizeProvider(i + 1).notifier).position!;
     final v = state ?? 0.0;
-    if (i == 0) {
-      ref.read(tabSizeProvider(i).notifier).current(v);
-      final next = ref.read(tabSizeProvider(i + 1)).value?.width ?? 0.0;
-      ref.read(tabSizeProvider(i + 1).notifier).next(next + (c - v));
-    } else if (i == totalTabs - 2) {
-      final currentPosition = ref.read(tabSizeProvider(i).notifier).position!;
-      ref.read(tabSizeProvider(i).notifier).current(v - currentPosition);
-      ref.read(tabSizeProvider(i + 1).notifier).next(winSize - v - 6);
+
+    double minP = separatorWidth * i;
+    for (int l = 0; l < i; l++) {
+      minP += ref.read(tabSizeProvider(l)).value?.width ?? 0.0;
     }
+    ref.read(tabSizeProvider(i).notifier).current(v - minP);
+    ref.read(tabSizeProvider(i + 1).notifier).next(nextPosition + nextSize - v - 6);
+
     state = null;
-    return;
-    // final winSize = ref.read(winSizeProvider);
-    // final totalTabs = ref.read(totalTabsProvider);
-    // for (int x = 0; x < totalTabs; x++) {
-    //   if (x == i) {
-    //     ref.read(tabSizeProvider(i).notifier).current(state!);
-    //     final separat = (totalTabs - 1) * separatorWidth;
-    //     final ws = winSize.value?.width ?? 0.0;
-    //     final others = ws - state! - separat;
-    //     // log('$v others $separat - $ws - $state ($others) : ${(others / (totalTabs - 1))}');
-    //     ref.read(tabSizeProvider(1).notifier).others((others / (totalTabs - 1)));
-    //   }
-    // }
-    // previous = state;
-    // state = null;
   }
 }
