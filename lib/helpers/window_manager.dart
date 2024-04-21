@@ -1,13 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
 
 import 'constants.dart';
+import 'package:window_manager/window_manager.dart';
+
 import 'shared_pref.dart';
 
 late WindowOptions windowOptions;
 
 Future<void> windowManagerInit() async {
   const size = Size((defaultTabWidth * totalTabs) + (6 * totalTabs), defaultTabHeight);
+
   windowOptions = const WindowOptions(
     size: size,
     minimumSize: size, maximumSize: size,
@@ -18,15 +22,11 @@ Future<void> windowManagerInit() async {
     fullScreen: false,
   );
 
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.show();
-    await windowManager.focus();
-
+  await windowManager.waitUntilReadyToShow(windowOptions, () async {
     final position = await getWindowPosition();
-    print('Get : $position');
-
+    log(position.toString());
     if (position != null) {
-      windowManager.setPosition(position, animate: true);
+      await windowManager.setPosition(position, animate: true);
     }
   });
 }

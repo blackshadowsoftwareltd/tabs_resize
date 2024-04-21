@@ -8,6 +8,10 @@ Future<void> initSharedPref() async {
   prefs = await SharedPreferences.getInstance();
 }
 
+// Future<void> clearSharedPref() async {
+//   await prefs.clear();
+// }
+
 Future<void> saveWindowSize(Size s) async {
   await prefs.setDouble('winSizeW', s.width);
   await prefs.setDouble('winSizeH', s.height);
@@ -16,6 +20,10 @@ Future<void> saveWindowSize(Size s) async {
 Future<void> saveWindowPosition(Offset o) async {
   await prefs.setDouble('winPosX', o.dx);
   await prefs.setDouble('winPosY', o.dy);
+}
+
+Future<void> saveTabWidth(String tab, double w) async {
+  await prefs.setDouble('winTabW$tab', w);
 }
 
 Future<Size> getWindowSize() async {
@@ -29,4 +37,8 @@ Future<Offset?> getWindowPosition() async {
   final y = prefs.getDouble('winPosY');
   if (x == null || y == null) return null;
   return Offset(x, y);
+}
+
+Future<double?> getTabWidth(String tab) async {
+  return prefs.getDouble('winTabW$tab');
 }

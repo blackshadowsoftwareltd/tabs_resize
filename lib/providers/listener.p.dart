@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:window/helpers/shared_pref.dart';
@@ -16,6 +18,7 @@ class WMListener extends _$WMListener {
   }
 
   Future<void> windowMoveEvents() async {
+    log('Window Moved');
     if (startTime == null) {
       final position = await windowManager.getPosition();
       await saveWindowPosition(position);
@@ -25,4 +28,6 @@ class WMListener extends _$WMListener {
   }
 }
 
-Future<void> windowEvents(WidgetRef ref, String e) async {}
+Future<void> windowEvents(WidgetRef ref, String e) async {
+  log('Window Event: $e');
+}

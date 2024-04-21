@@ -1,30 +1,31 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:window/helpers/window_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../helpers/constants.dart';
+import '../helpers/shared_pref.dart';
 
 part 'window.p.g.dart';
 
 @riverpod
 class TotalTabs extends _$TotalTabs {
   @override
-  int build() => 3;
+  int build() => totalTabs;
 }
 
 @riverpod
 class WinSize extends _$WinSize {
   @override
-  Future<Size> build() async => await windowManager.getSize();
-
-  double exceptSeparator(int totalTabs) {
-    final t = ref.read(totalTabsProvider);
-    final s = state.value?.width ?? 0.0;
-    return s - (t * separatorWidth);
+  Future<Size> build() async {
+    return await windowManager.getSize();
   }
+
+  // double exceptSeparator(int totalTabs) {
+  //   final t = ref.read(totalTabsProvider);
+  //   final s = state.value?.width ?? 0.0;
+  //   return s - (t * separatorWidth);
+  // }
 }
 
 @riverpod
@@ -32,14 +33,19 @@ class TabSize extends _$TabSize {
   double? position;
   @override
   Future<Size> build(int i) async {
-    final s = ref.watch(winSizeProvider).value;
-    final sw = s?.width ?? 0.0;
+    final s = ref.watch(winSizeProvider).value ?? const Size(0, 0);
     final t = ref.watch(totalTabsProvider);
-    final tw = t - 1;
-    final size = Size(((sw - (tw * separatorWidth)) / t).abs(), 0);
+
+    // final old = await getTabWidth(i.toString());
+    // if (old != null) {
+    //   return Size(old, s?.height ?? 0.0);
+    // }
+    final exceptSep = s.width - (separatorWidth * (t - 1));
+
+    final size = Size(exceptSep / t, s.height);
+    print('Tabs Ref Initialized $i : $size');
 
     position = (size.width * i) + (separatorWidth * i);
-    log('${(sw - (tw * separatorWidth)) / t} init - ${size.toString()} Position $position');
     return size;
   }
 
@@ -51,11 +57,11 @@ class TabSize extends _$TabSize {
     state = AsyncValue.data(Size(v, state.value!.height));
   }
 
-  void forwordUpdate(double v) {
-    if (v < minimumTabWidth || v - windowOptions.size!.width < minimumTabWidth) return;
-    log(v.toString());
-    state = AsyncValue.data(Size(v, state.value!.height));
-  }
+  // void forwordUpdate(double v) {
+  //   if (v < minimumTabWidth || v - windowOptions.size!.width < minimumTabWidth) return;
+  //   log(v.toString());
+  //   state = AsyncValue.data(Size(v, state.value!.height));
+  // }
 
   void next(double v) {
     final p = (state.value?.width ?? 0) - v;
@@ -101,9 +107,13 @@ class SeparatorPosition extends _$SeparatorPosition {
     for (int l = 0; l < i; l++) {
       minP += ref.read(tabSizeProvider(l)).value?.width ?? 0.0;
     }
-    ref.read(tabSizeProvider(i).notifier).current(v - minP);
-    ref.read(tabSizeProvider(i + 1).notifier).next(nextPosition + nextSize - v - 6);
+    final current = v - minP;
+    final next = nextPosition + nextSize - v - 6;
 
+    ref.read(tabSizeProvider(i).notifier).current(current);
+    ref.read(tabSizeProvider(i + 1).notifier).next(next);
+    await saveTabWidth(i.toString(), current);
+    await saveTabWidth((i + 1).toString(), next);
     state = null;
   }
 }

@@ -6,7 +6,7 @@ part of 'listener.p.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$wMListenerHash() => r'dc935163d2c6155e952dd240793ed553e4fed667';
+String _$wMListenerHash() => r'7f3acbf86afdf0129a4ca3713126a097101494d5';
 
 /// See also [WMListener].
 @ProviderFor(WMListener)

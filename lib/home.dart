@@ -41,8 +41,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(winSizeProvider);
-
     return Scaffold(
       backgroundColor: Colors.orange,
       body: Stack(
