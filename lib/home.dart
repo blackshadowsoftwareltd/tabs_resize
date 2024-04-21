@@ -37,9 +37,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(winSizeProvider);
     // log(MediaQuery.of(context).size.width.toString());
 
     final separatorFirst = ref.watch(separatorPositionProvider(0));
+    final separatorSecond = ref.watch(separatorPositionProvider(1));
     return Scaffold(
       backgroundColor: Colors.orange,
       body: Stack(
@@ -100,6 +102,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
           if (separatorFirst != null)
             Positioned(
               left: separatorFirst,
+              child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: const SeparatorX()),
+            ),
+          if (separatorSecond != null)
+            Positioned(
+              left: separatorSecond,
               child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: const SeparatorX()),
             ),
         ],

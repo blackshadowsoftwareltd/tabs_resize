@@ -17,9 +17,9 @@ class Separator extends ConsumerWidget {
       // onExit: (_) => print('onExit'),
       // onHover: (_) => print('onHover'),
       child: GestureDetector(
-        onHorizontalDragStart: (v) => separatorFirst.startEnd(v.globalPosition.dx),
+        onHorizontalDragStart: (v) async => await separatorFirst.start(v.globalPosition.dx),
         onHorizontalDragUpdate: (v) async => await separatorFirst.update(v.globalPosition.dx),
-        onHorizontalDragEnd: (v) => separatorFirst.startEnd(null),
+        onHorizontalDragEnd: (v) async => await separatorFirst.end(),
         child: const SeparatorX(),
       ),
     );

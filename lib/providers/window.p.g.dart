@@ -6,7 +6,7 @@ part of 'window.p.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$totalTabsHash() => r'658d865bfe10b7a2b25c712ba95e0842e74f54ac';
+String _$totalTabsHash() => r'a142b7b8b08bb00c81e76afd899850fb6c24f8b5';
 
 /// See also [TotalTabs].
 @ProviderFor(TotalTabs)
@@ -20,7 +20,7 @@ final totalTabsProvider = AutoDisposeNotifierProvider<TotalTabs, int>.internal(
 );
 
 typedef _$TotalTabs = AutoDisposeNotifier<int>;
-String _$winSizeHash() => r'adf415af3cc3a8eeae2a7f4fc7a19ed532207351';
+String _$winSizeHash() => r'a2bfca493d738596b88b7412f33cdbacfe5394c6';
 
 /// See also [WinSize].
 @ProviderFor(WinSize)
@@ -35,7 +35,7 @@ final winSizeProvider =
 );
 
 typedef _$WinSize = AutoDisposeAsyncNotifier<Size>;
-String _$tabSizeHash() => r'52f8103d479b4c662c8e527f25e1c4675aa7962a';
+String _$tabSizeHash() => r'33f38ec1f572a137aae07951ac957ab382a53af1';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -197,7 +197,7 @@ class _TabSizeProviderElement
   int get i => (origin as TabSizeProvider).i;
 }
 
-String _$separatorPositionHash() => r'ffd9d7a9bd256a471fb38abf26d4d3ae48be2b09';
+String _$separatorPositionHash() => r'77163e3402754c92be8152e12bfe3f82c9af9cc9';
 
 abstract class _$SeparatorPosition
     extends BuildlessAutoDisposeNotifier<double?> {
