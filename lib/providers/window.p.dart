@@ -6,13 +6,13 @@ import '../helpers/constants.dart';
 import '../helpers/shared_pref.dart';
 part 'window.p.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class TotalTabs extends _$TotalTabs {
   @override
   int build() => totalTabs;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class WinSize extends _$WinSize {
   @override
   Future<Size> build() async {
@@ -20,19 +20,29 @@ class WinSize extends _$WinSize {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: false)
 class TabSize extends _$TabSize {
   double? position;
   @override
   Future<Size> build(int i) async {
-    final s = ref.watch(winSizeProvider).value ?? const Size(0, 0);
+    position ??= 0;
+    final oldWidth = await getTabWidth(i.toString());
+    log('Old tab $i $oldWidth P $position');
+    final s = ref.watch(winSizeProvider).value;
+
     final t = ref.watch(totalTabsProvider);
 
-    final exceptSep = s.width - (separatorWidth * (t - 1));
+    final exceptSep = s?.width == null ? 0 : s!.width - (separatorWidth * (t - 1));
 
-    final size = Size((exceptSep / t).abs(), s.height);
-
-    position = (size.width * i) + (separatorWidth * i);
+    final size = oldWidth != null ? Size(oldWidth.abs(), s?.height ?? 0) : Size((exceptSep / t).abs(), s?.height ?? 0);
+    // final size = Size((exceptSep / t).abs(), s?.height ?? 0);
+    for (int l = 0; l < i; l++) {
+      final w = ref.read(tabSizeProvider(l)).value?.width ?? 0.0;
+      position = s?.width == null ? 0 : (position ?? 0) + w;
+    }
+    log('New tab-1 $i ${size.width} P $position');
+    // position = position ?? 0 + (separatorWidth * i);
+    log('New tab-2 $i ${size.width} P $position');
     return size;
   }
 
@@ -52,7 +62,7 @@ class TabSize extends _$TabSize {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: false)
 class SeparatorPosition extends _$SeparatorPosition {
   double? previous;
   @override
@@ -83,14 +93,14 @@ class SeparatorPosition extends _$SeparatorPosition {
     final nextSize = ref.read(tabSizeProvider(i + 1)).value?.width ?? 0;
     final nextPosition = ref.read(tabSizeProvider(i + 1).notifier).position!;
     final v = state ?? 0.0;
-
+    log('NS $nextSize NP $nextPosition V $v');
     double minP = separatorWidth * i;
     for (int l = 0; l < i; l++) {
       minP += ref.read(tabSizeProvider(l)).value?.width ?? 0.0;
     }
     final current = v - minP;
-    final next = nextPosition + nextSize - v - 6;
-
+    final next = nextPosition + nextSize - v + (separatorWidth * i);
+    log('Current $current Next $next');
     ref.read(tabSizeProvider(i).notifier).current(current);
     ref.read(tabSizeProvider(i + 1).notifier).next(next);
     await saveTabWidth(i.toString(), current);
