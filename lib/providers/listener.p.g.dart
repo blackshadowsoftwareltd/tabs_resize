@@ -6,7 +6,7 @@ part of 'listener.p.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$wMListenerHash() => r'7f3acbf86afdf0129a4ca3713126a097101494d5';
+String _$wMListenerHash() => r'82147ef114a08824297e263b9bce685fe9f3d6c8';
 
 /// See also [WMListener].
 @ProviderFor(WMListener)
@@ -21,5 +21,19 @@ final wMListenerProvider =
 );
 
 typedef _$WMListener = AutoDisposeNotifier<void>;
+String _$isResizingHash() => r'f435e9272cef1ae5bf14c9ff0edc63bd1041d37f';
+
+/// See also [IsResizing].
+@ProviderFor(IsResizing)
+final isResizingProvider = NotifierProvider<IsResizing, bool>.internal(
+  IsResizing.new,
+  name: r'isResizingProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$isResizingHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$IsResizing = Notifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

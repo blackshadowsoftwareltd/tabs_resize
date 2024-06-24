@@ -1,4 +1,6 @@
 // Obtain shared preferences.
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,9 +10,9 @@ Future<void> initSharedPref() async {
   prefs = await SharedPreferences.getInstance();
 }
 
-// Future<void> clearSharedPref() async {
-//   await prefs.clear();
-// }
+Future<void> clearSharedPref() async {
+  await prefs.clear();
+}
 
 Future<void> saveWindowSize(Size s) async {
   await prefs.setDouble('winSizeW', s.width);
@@ -22,8 +24,13 @@ Future<void> saveWindowPosition(Offset o) async {
   await prefs.setDouble('winPosY', o.dy);
 }
 
-Future<void> saveTabWidth(String tab, double w) async {
-  await prefs.setDouble('winTabW$tab', w);
+// Future<void> saveTabWidth(String tab, double w) async {
+//   await prefs.setDouble('winTabW$tab', w);
+// }
+
+Future<void> saveTabRatio(String tab, double w) async {
+  log('Save tab Ratio : $tab -> $w');
+  await prefs.setDouble('Ratio$tab', w);
 }
 
 Future<Size> getWindowSize() async {
@@ -39,6 +46,6 @@ Future<Offset?> getWindowPosition() async {
   return Offset(x, y);
 }
 
-Future<double?> getTabWidth(String tab) async {
-  return prefs.getDouble('winTabW$tab');
+Future<double?> getTabRatio(String tab) async {
+  return prefs.getDouble('Ratio$tab');
 }

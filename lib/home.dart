@@ -6,6 +6,7 @@ import 'package:window/providers/window.p.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'components/components.dart';
+import 'helpers/shared_pref.dart';
 import 'providers/listener.p.dart';
 import 'components/separator.dart';
 
@@ -41,6 +42,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(isResizingProvider);
     return Scaffold(
       backgroundColor: Colors.orange,
       body: Stack(
@@ -50,6 +52,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
               children: [
                 Consumer(builder: (context, state, __) {
                   final first = state.watch(tabSizeProvider(0));
+                  final ratio = state.watch(tabSizeProvider(0).notifier).ratio;
                   return first.when(
                     error: (e, _) => Center(
                       child: Text(e.toString()),
@@ -59,6 +62,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
                       return ContainerZ(
                         width: size.width,
                         color: Colors.purple,
+                        ratio: ratio,
                       );
                     },
                   );
@@ -66,6 +70,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
                 const Separator(i: 0),
                 Consumer(builder: (context, state, __) {
                   final second = ref.watch(tabSizeProvider(1));
+                  final ratio = state.watch(tabSizeProvider(1).notifier).ratio;
                   return second.when(
                     error: (e, _) => Center(
                       child: Text(e.toString()),
@@ -75,6 +80,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
                       return ContainerZ(
                         width: size.width,
                         color: Colors.lightGreen,
+                        ratio: ratio,
                       );
                     },
                   );
@@ -82,6 +88,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
                 const Separator(i: 1),
                 Consumer(builder: (context, state, __) {
                   final third = ref.watch(tabSizeProvider(2));
+                  final ratio = state.watch(tabSizeProvider(2).notifier).ratio;
                   return third.when(
                     error: (e, _) => Center(
                       child: Text(e.toString()),
@@ -91,6 +98,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
                       return ContainerZ(
                         width: size.width,
                         color: Colors.lightGreen,
+                        ratio: ratio,
                       );
                     },
                   );
@@ -105,6 +113,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
                 child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: const SeparatorX()),
               )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await clearSharedPref();
+        },
+        child: const Icon(Icons.clear_all),
       ),
     );
   }

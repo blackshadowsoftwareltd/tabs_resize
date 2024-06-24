@@ -6,3 +6,5 @@ const minimumTabWidth = 250.0;
 const separatorWidth = 6.0;
 
 const totalTabs = 3;
+
+const debounceDuration = Duration(milliseconds: 500);

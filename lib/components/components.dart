@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ContainerZ extends StatelessWidget {
-  const ContainerZ({super.key, required this.color, required this.width});
+  const ContainerZ({super.key, required this.color, required this.width, required this.ratio});
   final Color? color;
   final double width;
+  final double? ratio;
   @override
   Widget build(BuildContext context) {
     //  log(width.toString());
@@ -14,7 +15,15 @@ class ContainerZ extends StatelessWidget {
       height: size.height,
       width: width,
       color: color ?? Colors.green,
-      child: Image.network(_img, fit: BoxFit.cover),
+      // child: Image.network(_img, fit: BoxFit.cover),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text('Width: $width'),
+          Text('Ratio: $ratio'),
+        ],
+      ),
     );
   }
 }
