@@ -41,6 +41,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
   }
 
   @override
+  void onWindowMaximize() {
+    _enterFullScreen();
+    super.onWindowMaximize();
+  }
+
+  Future<void> _enterFullScreen() async => await saveWindowFullScreen(true);
+
+  @override
+  void onWindowUnmaximize() {
+    _leaveFullScreen();
+    super.onWindowUnmaximize();
+  }
+
+  Future<void> _leaveFullScreen() async => await saveWindowFullScreen(false);
+
+  @override
   Widget build(BuildContext context) {
     ref.watch(isResizingProvider);
     return Scaffold(

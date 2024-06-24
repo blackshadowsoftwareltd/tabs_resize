@@ -23,6 +23,7 @@ class WinSize extends _$WinSize {
   Future<void> checkUpdate(Size s) async {
     if (s == state.value) return;
     state = AsyncValue.data(s);
+    await saveWindowSize(s);
   }
 
   double actual() {

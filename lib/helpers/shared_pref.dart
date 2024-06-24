@@ -14,6 +14,11 @@ Future<void> clearSharedPref() async {
   await prefs.clear();
 }
 
+Future<void> saveWindowFullScreen(bool v) async {
+  log('Save Full Screen : $v');
+  await prefs.setBool('fullScreen', v);
+}
+
 Future<void> saveWindowSize(Size s) async {
   await prefs.setDouble('winSizeW', s.width);
   await prefs.setDouble('winSizeH', s.height);
@@ -33,9 +38,10 @@ Future<void> saveTabRatio(String tab, double w) async {
   await prefs.setDouble('Ratio$tab', w);
 }
 
-Future<Size> getWindowSize() async {
-  final double w = prefs.getDouble('winSizeW') ?? 800;
-  final double h = prefs.getDouble('winSizeH') ?? 600;
+Future<Size?> getWindowSize() async {
+  final double? w = prefs.getDouble('winSizeW');
+  final double? h = prefs.getDouble('winSizeH');
+  if (w == null || h == null) return null;
   return Size(w, h);
 }
 
@@ -48,4 +54,8 @@ Future<Offset?> getWindowPosition() async {
 
 Future<double?> getTabRatio(String tab) async {
   return prefs.getDouble('Ratio$tab');
+}
+
+bool getWindowFullScreen() {
+  return prefs.getBool('fullScreen') ?? false;
 }

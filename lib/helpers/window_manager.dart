@@ -10,11 +10,17 @@ import 'shared_pref.dart';
 late WindowOptions windowOptions;
 
 Future<void> windowManagerInit() async {
-  const size = Size((defaultTabWidth * totalTabs) + (6 * totalTabs), defaultTabHeight);
+  const min = Size((defaultTabWidth * totalTabs) + (6 * totalTabs), defaultTabHeight);
+  final size = await getWindowSize() ?? min;
+  if (getWindowFullScreen()) {
+    await windowManager.maximize();
+  } else {
+    await setWindowPosition();
+  }
 
-  windowOptions = const WindowOptions(
+  windowOptions = WindowOptions(
     size: size,
-    minimumSize: size,
+    minimumSize: min,
     // maximumSize: size,
     // center: true,
     backgroundColor: Colors.transparent,
@@ -22,12 +28,13 @@ Future<void> windowManagerInit() async {
     titleBarStyle: TitleBarStyle.normal,
     fullScreen: false,
   );
+  await windowManager.waitUntilReadyToShow(windowOptions, () async {});
+}
 
-  await windowManager.waitUntilReadyToShow(windowOptions, () async {
-    final position = await getWindowPosition();
-    log(position.toString());
-    if (position != null) {
-      await windowManager.setPosition(position, animate: true);
-    }
-  });
+Future<void> setWindowPosition() async {
+  final position = await getWindowPosition();
+  log(position.toString());
+  if (position != null) {
+    await windowManager.setPosition(position, animate: true);
+  }
 }
