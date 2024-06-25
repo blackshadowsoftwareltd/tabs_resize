@@ -35,6 +35,7 @@ dependencies:
   riverpod_annotation: ^2.3.5
   window_manager: ^0.3.8
   shared_preferences: ^2.2.3
+  screen_retriever: ^0.1.9
 
   cupertino_icons: ^1.0.6
 

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:screen_retriever/screen_retriever.dart';
 import 'package:window_manager/window_manager.dart';
 import '../helpers/constants.dart';
 import '../helpers/shared_pref.dart';
@@ -147,4 +148,14 @@ double toRatio(double w, double s) {
 
 double fromRatio(double r, double s) {
   return s * r;
+}
+
+@riverpod
+class Displays extends _$Displays {
+  @override
+  Future<List<Display>> build() async {
+    final d = await screenRetriever.getPrimaryDisplay();
+    final all = await screenRetriever.getAllDisplays();
+    return [d, ...all];
+  }
 }

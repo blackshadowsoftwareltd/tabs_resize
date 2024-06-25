@@ -20,7 +20,7 @@ final totalTabsProvider = NotifierProvider<TotalTabs, int>.internal(
 );
 
 typedef _$TotalTabs = Notifier<int>;
-String _$winSizeHash() => r'36d6650cc91f6ac7cbe243ee13527f1fcf568275';
+String _$winSizeHash() => r'3277d36338db57c85c20079e85c90cf101648582';
 
 /// See also [WinSize].
 @ProviderFor(WinSize)
@@ -34,7 +34,7 @@ final winSizeProvider = AsyncNotifierProvider<WinSize, Size>.internal(
 );
 
 typedef _$WinSize = AsyncNotifier<Size>;
-String _$tabSizeHash() => r'4b86fa88cecbe314912368be9aa4bf58165d85f5';
+String _$tabSizeHash() => r'e489d93eaa150c119f11af07e47beceb11d635ec';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -196,7 +196,7 @@ class _TabSizeProviderElement
   int get i => (origin as TabSizeProvider).i;
 }
 
-String _$separatorPositionHash() => r'08ca16e0159b6afcd12f4f887f421b760c5c0692';
+String _$separatorPositionHash() => r'7d4b67caf175e10757c5c89d2ed9f4b435feb2c5';
 
 abstract class _$SeparatorPosition
     extends BuildlessAutoDisposeNotifier<double?> {
@@ -339,5 +339,21 @@ class _SeparatorPositionProviderElement
   @override
   int get i => (origin as SeparatorPositionProvider).i;
 }
+
+String _$displaysHash() => r'f34ea35798aa8be74d9bdc393d9d01a3e29e3898';
+
+/// See also [Displays].
+@ProviderFor(Displays)
+final displaysProvider =
+    AutoDisposeAsyncNotifierProvider<Displays, List<Display>>.internal(
+  Displays.new,
+  name: r'displaysProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$displaysHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$Displays = AutoDisposeAsyncNotifier<List<Display>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

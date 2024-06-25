@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:window/helpers/extensions.dart';
 import 'package:window/providers/window.p.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -59,6 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
   @override
   Widget build(BuildContext context) {
     ref.watch(isResizingProvider);
+    final displays = ref.watch(displaysProvider.select((v) => v.value ?? []));
     return Scaffold(
       backgroundColor: Colors.orange,
       body: Stack(
@@ -127,14 +129,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WindowListener {
               Positioned(
                 left: ref.watch(separatorPositionProvider(i)),
                 child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: const SeparatorX()),
-              )
+              ),
+          // Text('x.displayInfo'),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await clearSharedPref();
-        },
-        child: const Icon(Icons.clear_all),
+      floatingActionButton: Tooltip(
+        message: displays.map((e) => e.displayInfo).toList().join('\n\n'),
+        child: FloatingActionButton(
+          onPressed: () async {
+            await clearSharedPref();
+          },
+          child: const Icon(Icons.clear_all),
+        ),
       ),
     );
   }
